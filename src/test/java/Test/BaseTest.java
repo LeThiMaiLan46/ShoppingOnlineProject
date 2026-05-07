@@ -10,16 +10,17 @@ import java.time.Duration;
 public class BaseTest {
     protected WebDriver driver;
 
-    @BeforeSuite
+    @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-
         driver.manage().window().maximize();
+        driver.get("https://www.saucedemo.com/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
 
-    @AfterSuite
+    @AfterMethod
     public void tearDown() {
         driver.quit();
     }

@@ -11,6 +11,7 @@ public class InventoryPageUI {
     public static final String MENU_CLOSE_BUTTON = "//button[@id='react-burger-cross-btn']";
     public static final String MENU_ITEM = "//a[text()='%s']";
 
+    public static final String PRODUCT_NAME = "//div[@class=\"inventory_item_name \"]";
     public static final String ADD_TO_CART_BTN = "//div[text()='%s']/ancestor::div[@class='inventory_item']//button[contains(text(),'Add to cart')]";
     public static final String REMOVE_FROM_CART_BTN = "//div[text()='%s']/ancestor::div[@class='inventory_item']//button[contains(text(),'Remove')]";
     public static final String CART_BADGE = "//span[@class='shopping_cart_badge']";

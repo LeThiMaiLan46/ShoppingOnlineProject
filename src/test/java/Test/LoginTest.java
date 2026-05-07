@@ -2,6 +2,7 @@ package Test;
 
 import Actions.InventoryPageActions;
 import Actions.LoginPageActions;
+import UI.InventoryPageUI;
 import Utils.ExcelUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -12,11 +13,6 @@ import java.time.Duration;
 import java.util.Map;
 
 public class LoginTest extends BaseTest {
-    @BeforeMethod
-    public void getPage() {
-        driver.get("https://www.saucedemo.com/");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    }
 
     @DataProvider(name = "loginData")
     public Object[][] getLoginData() {
@@ -37,6 +33,7 @@ public class LoginTest extends BaseTest {
 
         if("success".equalsIgnoreCase(expectedResult)) {
             InventoryPageActions inventoryPageActions = new InventoryPageActions(driver);
+            Assert.assertEquals(driver.getCurrentUrl(), InventoryPageUI.CURRENT_URL);
             Assert.assertTrue(inventoryPageActions.isPageLoaded(), "Login successfully. The Inventory page displays");
         } else {
             String actualError = loginPageActions.getErrorMessage();

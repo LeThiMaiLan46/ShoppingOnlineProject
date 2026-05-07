@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BasePage {
     protected WebDriver driver;
@@ -14,7 +15,7 @@ public class BasePage {
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public BasePage() {
@@ -42,4 +43,7 @@ public class BasePage {
         return getElement(xpath).isDisplayed();
     }
 
+    protected List<WebElement> getListElements(String xpath) {
+        return driver.findElements(By.xpath(xpath));
+    }
 }
