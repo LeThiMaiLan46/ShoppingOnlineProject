@@ -29,7 +29,7 @@ public class InventoryMenuTest extends BaseTest {
     }
 
     @Test
-    public void HoverMenuItems() {
+    public void ChangeTextWhenHoverMenuItems() {
         inventory.menu().openMenu();
         inventory.menu().hoverMenuItem("All Items");
         inventory.menu().hoverMenuItem("About");

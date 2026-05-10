@@ -11,6 +11,7 @@ public class InventoryTest extends BaseTest{
     InventoryPageActions inventory;
     LoginPageActions login;
     YourCartPageActions yourCart;
+    int currentProductsCount;
     @BeforeMethod
     public void getPage() {
         login = new LoginPageActions(driver);
@@ -20,15 +21,19 @@ public class InventoryTest extends BaseTest{
 
     @Test
     public void ThePageDisplayCorrectly() {
-        inventory.isPageLoaded();
+        Assert.assertTrue(inventory.isPageLoaded());
     }
 
     @Test
-    public void AddProductToCartSuccessfully() {
-        int currentProductsCount = inventory.getCartCount();
+    public void AddSingleProductToCart() {
+        currentProductsCount = inventory.getCartCount();
         inventory.addProductToCart(1);
         Assert.assertTrue(inventory.isRemoveButtonDisplayed(1));
         Assert.assertEquals(inventory.getCartCount(), currentProductsCount + 1);
+    }
+
+    @Test
+    public void AddMultipleProductsToCart() {
         currentProductsCount = inventory.getCartCount();
         inventory.addProductToCart(2);
         inventory.addProductToCart(3);
@@ -40,9 +45,27 @@ public class InventoryTest extends BaseTest{
     }
 
     @Test
-    public void RemoveProductFromCart() {
+    public void RemoveMultipleProductsFromCart() {
         int currentProductsCount = inventory.getCartCount();
         if(currentProductsCount == 0) {
+            inventory.addProductToCart(1);
+            inventory.addProductToCart(2);
+            inventory.addProductToCart(3);
+            inventory.addProductToCart(4);
+        }
+
+        currentProductsCount = inventory.getCartCount();
+        inventory.removeProductFromCart(2);
+        inventory.removeProductFromCart(3);
+        Assert.assertTrue(inventory.isAddButtonDisplayed(2));
+        Assert.assertTrue(inventory.isAddButtonDisplayed(3));
+        Assert.assertEquals(inventory.getCartCount(), currentProductsCount - 2);
+    }
+
+    @Test
+    public void RemoveSingleProductFromCart() {
+        int currentProductsCount = inventory.getCartCount();
+        if (currentProductsCount == 0) {
             inventory.addProductToCart(1);
             inventory.addProductToCart(2);
             inventory.addProductToCart(3);
@@ -52,12 +75,17 @@ public class InventoryTest extends BaseTest{
         inventory.removeProductFromCart(1);
         Assert.assertTrue(inventory.isAddButtonDisplayed(1));
         Assert.assertEquals(inventory.getCartCount(), currentProductsCount - 1);
-        currentProductsCount = inventory.getCartCount();
-        inventory.removeProductFromCart(2);
-        inventory.removeProductFromCart(3);
-        Assert.assertTrue(inventory.isAddButtonDisplayed(2));
-        Assert.assertTrue(inventory.isAddButtonDisplayed(3));
-        Assert.assertEquals(inventory.getCartCount(), currentProductsCount - 2);
+    }
+
+    @Test
+    public void DisplayOfCartBagde() {
+        boolean anyAddedItem = false;
+        for (int i = 1; i <= 6; i++) {
+            if (inventory.isRemoveButtonDisplayed(i)) {
+                anyAddedItem = true;
+            }
+        }
+        Assert.assertEquals(inventory.isCartBagdeDisplayed(), anyAddedItem);
     }
 
     @Test

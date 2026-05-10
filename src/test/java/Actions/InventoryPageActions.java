@@ -30,7 +30,7 @@ public class InventoryPageActions extends BasePage {
     }
 
     public void addProductToCart(int productNumber) {
-        String productName = getProductName(productNumber - 1);
+        String productName = getProductName(productNumber);
         click(String.format(InventoryPageUI.ADD_TO_CART_BTN, productName));
     }
 
@@ -43,7 +43,7 @@ public class InventoryPageActions extends BasePage {
     }
 
     public boolean isAddButtonDisplayed(int productNumber) {
-        String productName = getProductName(productNumber - 1);
+        String productName = getProductName(productNumber);
         return getElement(String.format(InventoryPageUI.ADD_TO_CART_BTN, productName)).isDisplayed();
     }
 
@@ -53,7 +53,7 @@ public class InventoryPageActions extends BasePage {
     }
 
     public void removeProductFromCart(int productNumber) {
-        String productName = getProductName(productNumber - 1);
+        String productName = getProductName(productNumber);
         click(String.format(InventoryPageUI.REMOVE_FROM_CART_BTN, productName));
     }
 
@@ -63,10 +63,14 @@ public class InventoryPageActions extends BasePage {
         for (WebElement product : products) {
             productsName.add(product.getText());
         }
-        return productsName.get(index);
+        return productsName.get(index-1);
     }
 
     public void goToCartPage() {
         click(InventoryPageUI.CART_ICON);
+    }
+
+    public boolean isCartBagdeDisplayed() {
+        return isDisplayed(InventoryPageUI.CART_BADGE);
     }
 }
